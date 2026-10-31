@@ -594,12 +594,14 @@ footer span { color: var(--rose) }
 @media (max-width: 900px) {
   .nav { padding: 0 24px }
   .nav-links li:nth-child(n+4) { display: none }
-  .hero { grid-template-columns: 1fr; min-height: auto; grid-template-rows: 100svh auto }
-  .hero-right { height: 100svh }
+  .hero { grid-template-columns: 1fr; min-height: auto }
+  .hero-right { height: auto }
   .hero-photo {
-    object-position: center 10%;
-    mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
+    height: auto;
+    object-fit: contain;
+    object-position: center top;
+    mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
   }
   .hero-stats { display: none }
   .hero-left { padding: 48px 24px 56px }
