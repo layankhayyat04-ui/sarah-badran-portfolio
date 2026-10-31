@@ -269,9 +269,12 @@ img { max-width: 100%; display: block }
   height: 90%;
   max-height: 780px;
   width: auto;
-  object-fit: contain;
-  object-position: bottom center;
-  filter: drop-shadow(0 24px 60px rgba(0,0,0,.7));
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 50% 50% 0 0 / 40% 40% 0 0;
+  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  filter: brightness(1.05) contrast(1.05);
   animation: fadeIn 1.2s var(--ease) .3s both;
 }
 
@@ -664,7 +667,7 @@ footer span { color: var(--rose) }
     <div class="hero-photo-container">
       <div class="hero-arc"></div>
       <div class="hero-arc-shine"></div>
-      <img class="hero-photo" src="sarah-nobg.png" alt="Sarah Badran">
+      <img class="hero-photo" src="sarah-photo.jpg" alt="Sarah Badran">
       <div class="hero-stats">
         <div class="hero-stat">
           <div class="hero-stat-num">4+</div>
