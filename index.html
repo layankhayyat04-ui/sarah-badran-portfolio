@@ -235,60 +235,30 @@ img { max-width: 100%; display: block }
 /* Right — photo */
 .hero-right {
   position: relative; z-index: 2;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
   overflow: hidden;
-  padding-top: 64px;
 }
 
 .hero-photo-container {
   position: relative;
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
 }
 
-/* Decorative arc behind the photo */
-.hero-arc {
-  position: absolute;
-  bottom: 0;
-  width: 85%;
-  height: 85%;
-  border-radius: 50% 50% 0 0 / 60% 60% 0 0;
-  background: linear-gradient(160deg, var(--surface) 0%, var(--deep) 100%);
-  border: 1px solid var(--border-hi);
-  border-bottom: none;
-}
+/* No decorative arc — photo sits directly on dark bg */
+.hero-arc, .hero-arc-shine { display: none }
 
 .hero-photo {
   position: relative;
   z-index: 2;
-  height: 90%;
-  max-height: 780px;
-  width: auto;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center top;
-  border-radius: 50% 50% 0 0 / 40% 40% 0 0;
-  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  border-radius: 0;
+  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
   filter: brightness(1.05) contrast(1.05);
   animation: fadeIn 1.2s var(--ease) .3s both;
-}
-
-/* Shimmer line along the arc */
-.hero-arc-shine {
-  position: absolute;
-  bottom: 0;
-  width: 85%;
-  height: 85%;
-  border-radius: 50% 50% 0 0 / 60% 60% 0 0;
-  border: 1px solid transparent;
-  background: linear-gradient(var(--deep), var(--deep)) padding-box,
-              linear-gradient(135deg, var(--rose), transparent, var(--rose-lt)) border-box;
-  pointer-events: none;
 }
 
 /* Stats chips */
@@ -665,8 +635,6 @@ footer span { color: var(--rose) }
 
   <div class="hero-right">
     <div class="hero-photo-container">
-      <div class="hero-arc"></div>
-      <div class="hero-arc-shine"></div>
       <img class="hero-photo" src="sarah-photo.jpg" alt="Sarah Badran">
       <div class="hero-stats">
         <div class="hero-stat">
