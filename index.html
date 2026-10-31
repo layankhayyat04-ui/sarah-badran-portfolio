@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sarah Badran — Marketing Professional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap">
+<style>
+
+/* ═══ DESIGN TOKENS ═══════════════════════════════════════════════ */
+:root {
+  --midnight:   #070a13;
+  --deep:       #0c1020;
+  --surface:    #111827;
+  --surface-2:  #1a2235;
+  --rose:       #c9876a;
+  --rose-lt:    #e0a88a;
+  --rose-dim:   rgba(201,135,106,.15);
+  --gold:       #d4af78;
+  --cream:      #f2ede6;
+  --muted:      #8a9ab8;
+  --border:     rgba(201,135,106,.12);
+  --border-hi:  rgba(201,135,106,.3);
+  --ff-head: 'Playfair Display', Georgia, serif;
+  --ff-body: 'Inter', system-ui, sans-serif;
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+
+/* ═══ RESET ══════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+html { scroll-behavior: smooth }
+body {
+  background: var(--midnight);
+  color: var(--cream);
+  font-family: var(--ff-body);
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+a { color: var(--rose); text-decoration: none }
+img { max-width: 100%; display: block }
+
+/* ═══ KEYFRAMES ══════════════════════════════════════════════════ */
+@keyframes fadeUp   { from { opacity:0; transform:translateY(32px) } to { opacity:1; transform:none } }
+@keyframes fadeIn   { from { opacity:0 } to { opacity:1 } }
+@keyframes floatY   { 0%,100% { transform:translateY(0) } 50% { transform:translateY(-8px) } }
+@keyframes shimmer  { to { background-position: 200% center } }
+@keyframes glow     { 0%,100% { opacity:.3 } 50% { opacity:.6 } }
+@keyframes lineDraw { from { transform:scaleY(0) } to { transform:scaleY(1) } }
+@keyframes dotRing  { 0%,100% { box-shadow:0 0 0 0 rgba(201,135,106,.5) } 60% { box-shadow:0 0 0 7px rgba(201,135,106,0) } }
+@keyframes slideRight { from { transform:scaleX(0) } to { transform:scaleX(1) } }
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .8s var(--ease), transform .8s var(--ease);
+}
+.reveal.in { opacity:1; transform:none }
+.d1 { transition-delay:.08s }
+.d2 { transition-delay:.18s }
+.d3 { transition-delay:.30s }
+.d4 { transition-delay:.42s }
+.d5 { transition-delay:.56s }
+
+/* ═══ NAV ════════════════════════════════════════════════════════ */
+.nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 56px;
+  height: 64px;
+  background: rgba(7,10,19,.75);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: background .3s;
+}
+.nav.scrolled { background: rgba(7,10,19,.97) }
+.nav-logo {
+  font-family: var(--ff-head);
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: .03em;
+  color: var(--cream);
+}
+.nav-logo em { font-style: italic; color: var(--rose) }
+.nav-links { display: flex; gap: 2.2rem; list-style: none }
+.nav-links a {
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color .2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px; left: 0; right: 0;
+  height: 1px;
+  background: var(--rose);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s var(--ease);
+}
+.nav-links a:hover { color: var(--cream); opacity: 1 }
+.nav-links a:hover::after { transform: scaleX(1) }
+
+/* ═══ HERO ═══════════════════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+  background: var(--midnight);
+}
+
+/* Background noise texture */
+.hero::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0;
+}
+
+/* Ambient glows */
+.hero-glow-1 {
+  position: absolute;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,135,106,.09) 0%, transparent 65%);
+  top: -200px; left: -150px;
+  pointer-events: none; z-index: 0;
+  animation: glow 6s ease-in-out infinite;
+}
+.hero-glow-2 {
+  position: absolute;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(100,120,200,.05) 0%, transparent 65%);
+  bottom: -100px; right: 40%;
+  pointer-events: none; z-index: 0;
+  animation: glow 8s ease-in-out 2s infinite;
+}
+
+/* Left content */
+.hero-left {
+  position: relative; z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 100px 64px 80px 72px;
+  animation: fadeUp .9s var(--ease) both;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: .7rem;
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 2.2rem;
+}
+.hero-tag::before {
+  content: "";
+  width: 2.2rem; height: 1px;
+  background: linear-gradient(to right, var(--rose), transparent);
+}
+
+.hero-name {
+  font-family: var(--ff-head);
+  font-size: clamp(4rem, 7.5vw, 7rem);
+  font-weight: 400;
+  line-height: .95;
+  letter-spacing: -.02em;
+  color: var(--cream);
+  margin-bottom: .3rem;
+}
+.hero-name-last {
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--rose);
+  display: block;
+}
+
+.hero-rule {
+  width: 3rem; height: 1px;
+  background: linear-gradient(to right, var(--rose), transparent);
+  margin: 2rem 0;
+}
+
+.hero-desc {
+  font-size: .95rem;
+  font-weight: 300;
+  color: var(--muted);
+  max-width: 38ch;
+  line-height: 1.85;
+  margin-bottom: 3rem;
+}
+
+.hero-cta { display: flex; gap: .9rem; flex-wrap: wrap }
+
+.btn {
+  display: inline-block;
+  padding: .75rem 2rem;
+  font-family: var(--ff-body);
+  font-size: .65rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  transition: all .25s;
+  cursor: pointer;
+}
+.btn-primary {
+  background: var(--rose);
+  color: #07080e;
+  border: 1px solid var(--rose);
+}
+.btn-primary:hover { background: var(--rose-lt); border-color: var(--rose-lt); color: #07080e; opacity:1 }
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border-hi);
+  color: var(--cream);
+}
+.btn-outline:hover { border-color: var(--rose); color: var(--rose); opacity:1 }
+
+/* Right — photo */
+.hero-right {
+  position: relative; z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  padding-top: 64px;
+}
+
+.hero-photo-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* Decorative arc behind the photo */
+.hero-arc {
+  position: absolute;
+  bottom: 0;
+  width: 85%;
+  height: 85%;
+  border-radius: 50% 50% 0 0 / 60% 60% 0 0;
+  background: linear-gradient(160deg, var(--surface) 0%, var(--deep) 100%);
+  border: 1px solid var(--border-hi);
+  border-bottom: none;
+}
+
+.hero-photo {
+  position: relative;
+  z-index: 2;
+  height: 90%;
+  max-height: 780px;
+  width: auto;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: drop-shadow(0 24px 60px rgba(0,0,0,.7));
+  animation: fadeIn 1.2s var(--ease) .3s both;
+}
+
+/* Shimmer line along the arc */
+.hero-arc-shine {
+  position: absolute;
+  bottom: 0;
+  width: 85%;
+  height: 85%;
+  border-radius: 50% 50% 0 0 / 60% 60% 0 0;
+  border: 1px solid transparent;
+  background: linear-gradient(var(--deep), var(--deep)) padding-box,
+              linear-gradient(135deg, var(--rose), transparent, var(--rose-lt)) border-box;
+  pointer-events: none;
+}
+
+/* Stats chips */
+.hero-stats {
+  position: absolute;
+  left: -3rem;
+  bottom: 8rem;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  animation: fadeUp .9s var(--ease) .5s both;
+}
+.hero-stat {
+  background: rgba(17,24,39,.85);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-hi);
+  padding: .7rem 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+}
+.hero-stat-num {
+  font-family: var(--ff-head);
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--rose);
+  line-height: 1;
+}
+.hero-stat-lbl {
+  font-size: .6rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ═══ SECTION BASE ════════════════════════════════════════════════ */
+.section { padding: 8rem 72px }
+.container { max-width: 1160px; margin: 0 auto }
+
+.eyebrow {
+  display: flex; align-items: center; gap: .7rem;
+  font-size: .6rem; font-weight: 600;
+  letter-spacing: .24em; text-transform: uppercase;
+  color: var(--rose); margin-bottom: .8rem;
+}
+.eyebrow::before {
+  content: ""; width: 1.6rem; height: 1px;
+  background: var(--rose); flex-shrink: 0;
+}
+
+.sec-title {
+  font-family: var(--ff-head);
+  font-size: clamp(2.2rem, 4vw, 3.8rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--cream);
+  margin-bottom: 4rem;
+}
+.sec-title em { font-style: italic; color: var(--rose) }
+
+/* ═══ ABOUT ══════════════════════════════════════════════════════ */
+.about { background: var(--deep) }
+.about-inner {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 7rem;
+  align-items: start;
+}
+.about-text p {
+  font-size: .92rem; font-weight: 300;
+  color: var(--muted); line-height: 1.9;
+  margin-bottom: 1.4rem; max-width: 52ch;
+}
+
+.stats-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+}
+.stat-tile {
+  background: var(--surface);
+  padding: 2.2rem 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: background .25s;
+}
+.stat-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--rose-dim), transparent);
+  opacity: 0;
+  transition: opacity .3s;
+}
+.stat-tile:hover { background: var(--surface-2) }
+.stat-tile:hover::before { opacity: 1 }
+.stat-tile-num {
+  font-family: var(--ff-head);
+  font-size: 3rem; font-weight: 400;
+  color: var(--rose); line-height: 1;
+  margin-bottom: .4rem;
+}
+.stat-tile-lbl {
+  font-size: .62rem; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ═══ SKILLS ═════════════════════════════════════════════════════ */
+.skills { background: var(--midnight) }
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+}
+.skill-card {
+  background: var(--midnight);
+  padding: 2.5rem 2.2rem;
+  position: relative;
+  overflow: hidden;
+  transition: background .3s, transform .3s;
+}
+.skill-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--rose), var(--rose-lt));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .45s var(--ease);
+}
+.skill-card:hover { background: var(--deep); transform: translateY(-3px) }
+.skill-card:hover::after { transform: scaleX(1) }
+
+.skill-icon {
+  width: 54px; height: 54px;
+  object-fit: contain;
+  margin-bottom: 1.4rem;
+  transition: transform .35s var(--ease), filter .35s;
+  filter: drop-shadow(0 2px 8px rgba(201,135,106,.2));
+}
+.skill-card:hover .skill-icon {
+  transform: scale(1.08) translateY(-2px);
+  filter: drop-shadow(0 6px 18px rgba(201,135,106,.45));
+}
+.skill-title {
+  font-family: var(--ff-head);
+  font-size: 1.3rem; font-weight: 400;
+  color: var(--cream); margin-bottom: .6rem;
+}
+.skill-desc {
+  font-size: .82rem; font-weight: 300;
+  color: var(--muted); line-height: 1.8;
+  margin-bottom: 1rem;
+}
+.tags { display: flex; flex-wrap: wrap; gap: .35rem }
+.tag {
+  font-size: .58rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: .2rem .6rem;
+  border: 1px solid var(--border-hi);
+  color: var(--muted);
+  transition: all .2s;
+}
+.skill-card:hover .tag { border-color: rgba(201,135,106,.4); color: var(--rose-lt) }
+
+/* ═══ EXPERIENCE ═════════════════════════════════════════════════ */
+.experience { background: var(--deep) }
+.timeline { position: relative; padding-left: 1.8rem }
+.timeline-track {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--rose), transparent 90%);
+  transform-origin: top;
+  animation: lineDraw 1.6s var(--ease) both;
+}
+.exp-row {
+  position: relative;
+  padding: 0 0 3rem 2.5rem;
+}
+.exp-row:last-child { padding-bottom: 0 }
+.exp-dot {
+  position: absolute;
+  left: -1.8rem; top: .45rem;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--rose);
+  animation: dotRing 3s ease-in-out infinite;
+}
+.exp-dot-outer {
+  position: absolute;
+  left: calc(-1.8rem - 5px); top: .2rem;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(201,135,106,.25);
+}
+.exp-company {
+  font-size: .65rem; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--rose); margin-bottom: .15rem;
+}
+.exp-role {
+  font-family: var(--ff-head);
+  font-size: 1.3rem; font-weight: 400;
+  color: var(--cream); margin-bottom: .2rem;
+}
+.exp-period {
+  font-size: .75rem; font-weight: 300;
+  color: var(--muted); letter-spacing: .04em;
+}
+
+/* ═══ EDUCATION ══════════════════════════════════════════════════ */
+.education { background: var(--midnight) }
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+}
+.edu-card {
+  background: var(--midnight);
+  padding: 2.2rem 1.8rem;
+  position: relative;
+  overflow: hidden;
+  transition: background .25s;
+}
+.edu-card::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--rose), transparent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform .4s var(--ease);
+}
+.edu-card:hover { background: var(--deep) }
+.edu-card:hover::before { transform: scaleY(1) }
+.edu-icon {
+  width: 46px; height: 46px;
+  object-fit: contain;
+  margin-bottom: 1.1rem;
+  filter: drop-shadow(0 2px 8px rgba(201,135,106,.2));
+}
+.edu-name {
+  font-size: .92rem; font-weight: 500;
+  color: var(--cream); line-height: 1.4;
+  margin-bottom: .35rem;
+}
+.edu-issuer {
+  font-size: .72rem; font-weight: 300;
+  color: var(--muted); letter-spacing: .04em;
+}
+
+/* ═══ CONTACT ════════════════════════════════════════════════════ */
+.contact { background: var(--deep) }
+.contact-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7rem;
+  align-items: center;
+}
+.contact-headline {
+  font-family: var(--ff-head);
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--cream);
+}
+.contact-headline em { font-style: italic; color: var(--rose) }
+.contact-sub {
+  font-size: .9rem; font-weight: 300;
+  color: var(--muted); margin-top: 1.2rem;
+  max-width: 36ch; line-height: 1.85;
+}
+
+.contact-list { display: flex; flex-direction: column; gap: 1px; background: var(--border) }
+.contact-row {
+  display: flex; align-items: center;
+  gap: 1.2rem;
+  padding: 1.2rem 1.4rem;
+  background: var(--surface);
+  transition: background .2s, padding-left .25s;
+}
+.contact-row:hover { background: var(--surface-2); padding-left: 2rem }
+.contact-row img {
+  width: 36px; height: 36px;
+  object-fit: contain; flex-shrink: 0;
+  filter: drop-shadow(0 1px 5px rgba(201,135,106,.2));
+}
+.contact-lbl {
+  font-size: .58rem; font-weight: 600;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: var(--rose); display: block; margin-bottom: .12rem;
+}
+.contact-val {
+  font-size: .88rem; font-weight: 300; color: var(--cream);
+}
+
+/* ═══ FOOTER ══════════════════════════════════════════════════════ */
+footer {
+  background: var(--midnight);
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem 24px;
+  font-size: .68rem; font-weight: 300;
+  letter-spacing: .1em; color: var(--muted);
+}
+footer span { color: var(--rose) }
+
+/* ═══ SCROLLBAR ══════════════════════════════════════════════════ */
+::-webkit-scrollbar { width: 4px }
+::-webkit-scrollbar-track { background: var(--midnight) }
+::-webkit-scrollbar-thumb { background: rgba(201,135,106,.3); border-radius: 2px }
+
+/* ═══ RESPONSIVE ═════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .nav { padding: 0 24px }
+  .nav-links li:nth-child(n+4) { display: none }
+  .hero { grid-template-columns: 1fr; min-height: auto }
+  .hero-right { height: 70vw; max-height: 500px }
+  .hero-stats { display: none }
+  .hero-left { padding: 88px 24px 48px }
+  .section { padding: 5rem 24px }
+  .about-inner, .contact-inner { grid-template-columns: 1fr; gap: 3rem }
+  .skills-grid { grid-template-columns: 1fr 1fr }
+  .edu-grid { grid-template-columns: 1fr 1fr }
+}
+@media (max-width: 520px) {
+  .skills-grid, .edu-grid { grid-template-columns: 1fr }
+  .hero-name { font-size: clamp(3rem, 14vw, 4rem) }
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <span class="nav-logo">Sarah <em>Badran</em></span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+
+  <div class="hero-left">
+    <p class="hero-tag">Digital Marketing · Amman, Jordan</p>
+    <h1 class="hero-name">
+      Sarah
+      <span class="hero-name-last">Badran</span>
+    </h1>
+    <div class="hero-rule"></div>
+    <p class="hero-desc">Marketing strategist specializing in data‑driven campaigns, brand storytelling, and digital growth across paid and organic channels.</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-primary">Get in Touch</a>
+      <a href="#experience" class="btn btn-outline">View Journey</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-photo-container">
+      <div class="hero-arc"></div>
+      <div class="hero-arc-shine"></div>
+      <img class="hero-photo" src="sarah-nobg.png" alt="Sarah Badran">
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">4+</div>
+          <div class="hero-stat-lbl">Years<br>Experience</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">6+</div>
+          <div class="hero-stat-lbl">Organizations</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section about" id="about">
+  <div class="container">
+    <p class="eyebrow reveal">About</p>
+    <div class="about-inner">
+      <div>
+        <h2 class="sec-title reveal d1">Bridging <em>creativity</em><br>with analytics</h2>
+        <div class="about-text">
+          <p class="reveal d2">A marketing professional with a strong background in digital marketing, branding, analytics, and campaign development. My experience spans marketing, sales, quality assurance, and compliance — giving me a well‑rounded perspective that combines creativity, analytical thinking, and attention to detail.</p>
+          <p class="reveal d3">I specialize in developing data‑driven marketing strategies and leveraging platforms such as Google Ads and Meta Ads to support effective campaigns and strengthen brand presence. My expertise in marketing data analysis, statistical analysis, and financial analysis allows me to turn insights into practical strategies that support business growth.</p>
+          <p class="reveal d4">Passionate about building meaningful brands, creating impactful campaigns, and contributing to innovative strategies that deliver measurable results.</p>
+        </div>
+      </div>
+      <div class="stats-block reveal d2">
+        <div class="stat-tile">
+          <div class="stat-tile-num">4+</div>
+          <div class="stat-tile-lbl">Years Experience</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile-num">6+</div>
+          <div class="stat-tile-lbl">Organizations</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile-num">2</div>
+          <div class="stat-tile-lbl">Certifications</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile-num">360°</div>
+          <div class="stat-tile-lbl">Marketing View</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section skills" id="skills">
+  <div class="container">
+    <p class="eyebrow reveal">Expertise</p>
+    <h2 class="sec-title reveal d1">What I <em>bring</em><br>to the table</h2>
+    <div class="skills-grid">
+      <div class="skill-card reveal d1">
+        <img class="skill-icon" src="icons/marketing_analytics.png" alt="">
+        <div class="skill-title">Marketing Analytics</div>
+        <p class="skill-desc">Translating raw data into actionable strategies through statistical and financial analysis.</p>
+        <div class="tags"><span class="tag">Statistical Analysis</span><span class="tag">Data Analysis</span><span class="tag">Financial Analysis</span></div>
+      </div>
+      <div class="skill-card reveal d2">
+        <img class="skill-icon" src="icons/digital_marketing.png" alt="">
+        <div class="skill-title">Digital Marketing</div>
+        <p class="skill-desc">Running targeted campaigns across paid search and social platforms to maximize ROI and brand visibility.</p>
+        <div class="tags"><span class="tag">Google Ads</span><span class="tag">Meta Ads</span><span class="tag">Campaign Dev</span></div>
+      </div>
+      <div class="skill-card reveal d3">
+        <img class="skill-icon" src="icons/brand_strategy.png" alt="">
+        <div class="skill-title">Brand Strategy</div>
+        <p class="skill-desc">Building meaningful brand identities through cohesive messaging, positioning, and creative direction.</p>
+        <div class="tags"><span class="tag">Branding</span><span class="tag">Brand Presence</span><span class="tag">Content</span></div>
+      </div>
+      <div class="skill-card reveal d1">
+        <img class="skill-icon" src="icons/market_research.png" alt="">
+        <div class="skill-title">Market Research</div>
+        <p class="skill-desc">Deep‑dive research and analysis to uncover market opportunities and inform business decisions.</p>
+        <div class="tags"><span class="tag">Market Research</span><span class="tag">Consumer Insights</span></div>
+      </div>
+      <div class="skill-card reveal d2">
+        <img class="skill-icon" src="icons/business_dev.png" alt="">
+        <div class="skill-title">Business Development</div>
+        <p class="skill-desc">Growing pipelines and partnerships through strategic consulting, sales leadership, and account management.</p>
+        <div class="tags"><span class="tag">Consulting</span><span class="tag">Business Dev</span><span class="tag">Sales</span></div>
+      </div>
+      <div class="skill-card reveal d3">
+        <img class="skill-icon" src="icons/quality.png" alt="">
+        <div class="skill-title">Quality &amp; Compliance</div>
+        <p class="skill-desc">Ensuring operational excellence through structured quality assurance processes and compliance frameworks.</p>
+        <div class="tags"><span class="tag">QA</span><span class="tag">Compliance</span><span class="tag">Operations</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section experience" id="experience">
+  <div class="container">
+    <p class="eyebrow reveal">Career</p>
+    <h2 class="sec-title reveal d1">Professional <em>journey</em></h2>
+    <div class="timeline">
+      <div class="timeline-track"></div>
+      <div class="exp-row reveal d1">
+        <div class="exp-dot-outer"></div><div class="exp-dot"></div>
+        <div class="exp-company">Amrah Towers for Real Estate</div>
+        <div class="exp-role">Digital Marketing Specialist</div>
+        <div class="exp-period">September 2026 – Present · Amman, Jordan</div>
+      </div>
+      <div class="exp-row reveal d2">
+        <div class="exp-dot-outer"></div><div class="exp-dot"></div>
+        <div class="exp-company">Ajnabijo</div>
+        <div class="exp-role">Marketing Specialist</div>
+        <div class="exp-period">December 2024 – July 2026 · 1 yr 8 mos</div>
+      </div>
+      <div class="exp-row reveal d3">
+        <div class="exp-dot-outer"></div><div class="exp-dot"></div>
+        <div class="exp-company">Black Oasis</div>
+        <div class="exp-role">QA Compliance Specialist</div>
+        <div class="exp-period">June 2025 – July 2026 · Amman, Jordan</div>
+      </div>
+      <div class="exp-row reveal">
+        <div class="exp-dot-outer"></div><div class="exp-dot"></div>
+        <div class="exp-company">Black Oasis</div>
+        <div class="exp-role">Senior Sales Account Manager</div>
+        <div class="exp-period">November 2024 – May 2025 · 7 months</div>
+      </div>
+      <div class="exp-row reveal">
+        <div class="exp-dot-outer"></div><div class="exp-dot"></div>
+        <div class="exp-company">Black Oasis</div>
+        <div class="exp-role">Digital Engagement Specialist</div>
+        <div class="exp-period">March 2024 – June 2024 · 4 months</div>
+      </div>
+      <div class="exp-row reveal">
+        <div class="exp-dot-outer"></div><div class="exp-dot"></div>
+        <div class="exp-company">DART Entrepreneurship Society</div>
+        <div class="exp-role">Head of Marketing Team</div>
+        <div class="exp-period">May 2023 – October 2024 · 1 yr 6 mos</div>
+      </div>
+      <div class="exp-row reveal">
+        <div class="exp-dot-outer"></div><div class="exp-dot"></div>
+        <div class="exp-company">AIESEC</div>
+        <div class="exp-role">Incoming Exchange Team Member</div>
+        <div class="exp-period">February 2024 – July 2024 · Amman, Jordan</div>
+      </div>
+      <div class="exp-row reveal">
+        <div class="exp-dot-outer"></div><div class="exp-dot"></div>
+        <div class="exp-company">Quantum Leap Business Center</div>
+        <div class="exp-role">Marketing &amp; Administrative Coordinator</div>
+        <div class="exp-period">October 2022 – April 2024 · 1 yr 7 mos</div>
+      </div>
+      <div class="exp-row reveal">
+        <div class="exp-dot-outer"></div><div class="exp-dot"></div>
+        <div class="exp-company">Hult Prize at PSUT</div>
+        <div class="exp-role">Head of Public Relations</div>
+        <div class="exp-period">December 2022 – March 2023</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="section education" id="education">
+  <div class="container">
+    <p class="eyebrow reveal">Education &amp; Certifications</p>
+    <h2 class="sec-title reveal d1">Academic <em>foundation</em></h2>
+    <div class="edu-grid">
+      <div class="edu-card reveal d1">
+        <img class="edu-icon" src="icons/bachelor.png" alt="">
+        <div class="edu-name">B.Sc. E‑Marketing &amp; Social Media</div>
+        <div class="edu-issuer">Princess Sumaya University for Technology · 2021–2026</div>
+      </div>
+      <div class="edu-card reveal d2">
+        <img class="edu-icon" src="icons/google_ads.png" alt="">
+        <div class="edu-name">Google Ads Search Certificate</div>
+        <div class="edu-issuer">Google · Certified</div>
+      </div>
+      <div class="edu-card reveal d3">
+        <img class="edu-icon" src="icons/meta_ads.png" alt="">
+        <div class="edu-name">Meta Ads Certificate</div>
+        <div class="edu-issuer">Meta · Certified</div>
+      </div>
+      <div class="edu-card reveal d4">
+        <img class="edu-icon" src="icons/high_school.png" alt="">
+        <div class="edu-name">High School Diploma</div>
+        <div class="edu-issuer">Cambridge High School · 2021</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact" id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div>
+        <p class="eyebrow reveal">Contact</p>
+        <h2 class="contact-headline reveal d1">Let's build something<br><em>remarkable</em> together.</h2>
+        <p class="contact-sub reveal d2">Open to marketing collaborations, brand projects, and new opportunities across Amman and beyond.</p>
+      </div>
+      <div class="contact-list reveal d2">
+        <div class="contact-row">
+          <img src="icons/phone.png" alt="Phone">
+          <div><span class="contact-lbl">Phone</span><span class="contact-val">0797991703</span></div>
+        </div>
+        <div class="contact-row">
+          <img src="icons/email.png" alt="Email">
+          <div><span class="contact-lbl">Email</span><span class="contact-val">sarabadran13@gmail.com</span></div>
+        </div>
+        <div class="contact-row">
+          <img src="icons/linkedin.png" alt="LinkedIn">
+          <div><span class="contact-lbl">LinkedIn</span><span class="contact-val">sarah-badran-25a44b23b</span></div>
+        </div>
+        <div class="contact-row">
+          <img src="icons/location.png" alt="Location">
+          <div><span class="contact-lbl">Location</span><span class="contact-val">Amman, Jordan</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <span>Sarah Badran</span> · Marketing Professional · Amman, Jordan</p>
+</footer>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Nav on scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', scrollY > 50);
+}, { passive: true });
+</script>
+</body>
+</html>
